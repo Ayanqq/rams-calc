@@ -1,0 +1,17 @@
+/* src/styles/fonts.css */
+
+@font-face {
+    font-family: 'TT Interfaces';
+    src: url('../assets/fonts/TTInterfaces-Regular.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TT Interfaces';
+    src: url('../assets/fonts/TTInterfaces-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
