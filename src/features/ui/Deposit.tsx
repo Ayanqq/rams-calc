@@ -1,31 +1,48 @@
-import {useState} from "react";
 import {Label} from "@/components/ui/label.tsx";
 import {Slider} from "@/components/ui/slider.tsx";
+import {useState} from "react";
 
-const TOTAL_PRICE = 30_000_000; // общая сумма
+export const Deposit = ({label}: { label: string }) => {
+    const [percentage, setPercentage] = useState(33);
+    const [amount, setAmount] = useState(9900000); // допустим, от суммы 30 млн
 
-export const Deposit = () => {
-    const [percent, setPercent] = useState(50);
+    const fullPrice = 30000000;
 
-    const handleChange = (value: number[]) => {
-        setPercent(value[0]);
+    const handleSliderChange = (value: number[]) => {
+        const percent = value[0];
+        setPercentage(percent);
+        setAmount(Math.round((fullPrice * percent) / 100));
     };
 
-    const depositAmount = Math.round((TOTAL_PRICE * percent) / 100);
+    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.target.value.replace(/\D/g, ""));
+        setAmount(value);
+        setPercentage(Math.round((value / fullPrice) * 100));
+    };
 
     return (
-        <div className="border-[1px] border-[#CFD2D1] rounded-xs px-[15px] py-[6px] space-y-2">
-            <Label>Задаток</Label>
-            <div className="flex justify-between items-center text-sm font-medium">
-                <span className={'text-[15px] font-semibold'}>{depositAmount.toLocaleString()} ₸</span>
-                <span className={'text-[15px] font-semibold'}>{percent}%</span>
+        <div className="border-[1px] border-[#CFD2D1] rounded-xs px-[15px] py-[10px] space-y-3">
+            <Label>{label}</Label>
+
+            <div className="flex items-center gap-2">
+                <input
+                    type="text"
+                    value={amount.toLocaleString("ru-RU")}
+                    onChange={handleAmountChange}
+                    className="text-[15px] font-semibold border rounded px-3 py-2 w-full max-w-[200px]"
+                />
+                <span className="text-[15px] font-semibold">{percentage}%</span>
             </div>
+
             <Slider
-                defaultValue={[percent]}
+                defaultValue={[percentage]}
+                value={[percentage]}
                 max={100}
                 step={1}
-                onValueChange={handleChange}
+                onValueChange={handleSliderChange}
             />
+
+
         </div>
     );
 };
