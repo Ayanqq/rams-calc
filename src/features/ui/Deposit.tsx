@@ -3,7 +3,7 @@ import {Slider} from "@/components/ui/slider.tsx";
 import {useState} from "react";
 
 export const Deposit = ({label}: { label: string }) => {
-    const [percentage, setPercentage] = useState(33);
+    const [percentage, setPercentage] = useState(50);
     const [amount, setAmount] = useState(9900000); // допустим, от суммы 30 млн
 
     const fullPrice = 30000000;
