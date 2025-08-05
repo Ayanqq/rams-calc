@@ -1,10 +1,10 @@
-import { useState } from "react";
+import {useState} from "react";
 import {
     DndContext,
     closestCenter,
     PointerSensor,
     useSensor,
-    useSensors,
+    useSensors, type DragEndEvent,
 } from "@dnd-kit/core";
 import {
     arrayMove,
@@ -12,7 +12,7 @@ import {
     useSortable,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import {CSS} from "@dnd-kit/utilities";
 
 type Row = {
     id: number;
@@ -24,8 +24,8 @@ type Row = {
 
 export const Table = () => {
     const [rows, setRows] = useState<Row[]>([
-        { id: 1, paymentType: "Задаток", day: 1, date: "Июнь 2023", sum: 100000 },
-        { id: 2, paymentType: "ПВ", day: 2, date: "Июнь 2023", sum: 3000000 },
+        {id: 1, paymentType: "Задаток", day: 1, date: "Июнь 2023", sum: 100000},
+        {id: 2, paymentType: "ПВ", day: 2, date: "Июнь 2023", sum: 3000000},
     ]);
 
     const sensors = useSensors(useSensor(PointerSensor));
@@ -54,13 +54,13 @@ export const Table = () => {
                     key === "id" || key === "day" || key === "sum"
                         ? Number(value)
                         : value;
-                return { ...row, [key]: updatedValue };
+                return {...row, [key]: updatedValue};
             })
         );
     };
 
-    const handleDragEnd = (event: any) => {
-        const { active, over } = event;
+    const handleDragEnd = (event: DragEndEvent) => {
+        const {active, over} = event;
 
         if (active.id !== over?.id) {
             const oldIndex = rows.findIndex((row) => row.id === active.id);
@@ -126,7 +126,7 @@ function SortableRow({
         setNodeRef,
         transform,
         transition,
-    } = useSortable({ id: row.id });
+    } = useSortable({id: row.id});
 
     const style = {
         transform: CSS.Transform.toString(transform),
